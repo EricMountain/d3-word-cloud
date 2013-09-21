@@ -1,4 +1,9 @@
 d3-word-cloud
 =============
 
-D3 and word cloud sample demonstrating the use of dynamically loaded Google Fonts.
+# Word Cloud with Google Fonts
+
+Sample using Jason Davies'
+[d3-cloud](http://www.jasondavies.com/wordcloud/) demonstrating the use
+of dynamically loaded Google Fonts.
+
