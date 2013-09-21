@@ -1,85 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta charset="utf-8">
-			<!-- Based on https://raw.github.com/jasondavies/d3-cloud/master/examples/simple.html -->
-			<title>Cloud using Google Fonts</title>
-		</head>
-		<body>
-			<script src="../lib/d3/d3.v3.js"></script>
-			<script src="../lib/jasondavies-d3-cloud/d3.layout.cloud.js"></script>
-			<script>
-	var fontnames = [ "Raleway", "Kavoon", "Cinzel Decorative", "Spirax", "Kelly Slab", "Lily Script One", "Caesar Dressing" ];
-	var fontweights = [ 400 ];
-	var googlefonts = [];
-  var fill = d3.scale.category20();
-	var width = 1600;
-	var height = 1000;
-
-	// Generate Google font references from the base list
-	for (var i = 0; i < fontnames.length; i++) {
-		fontname = fontnames[i].replace(" ", "+");
-		googlefonts[i] = fontname + ":";
-
-		for (var j = 0; j < fontweights.length; j++) {
-		  googlefonts[i] += fontweights[j];
-
-			if (j < fontweights.length - 1)
-			  googlefonts[i] += ",";
-		}
-	}
-
-	window.onload = function() {
-	  // Load up the fonts asynchronously, see https://github.com/typekit/webfontloader
-	  WebFontConfig = {
-      google: { families: googlefonts },
-  		active: drawCloud,
-    };
-
-    (function() {
-      var wf = document.createElement('script');
-  		wf.src = '../lib/webfontloader/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
-    })();
-  }
-
-	function drawCloud() {
-		d3.layout.cloud().size([width / 2, height / 2])
-      .words([
-        "Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this"].map(function(d) {
-        return {text: d, size: 20 + Math.random() * 90, thefont: fontnames[Math.floor(Math.random() * fontnames.length)]};
-      }))
-      .padding(5)
-      .rotate(function() { return ~~(Math.random() * 2) * 90; })
-			.font(function(d) { return d.thefont; })
-      .fontSize(function(d) { return d.size; })
-      .on("end", draw)
-      .start();
-  }
-
-  function draw(words) {
-    d3.select("body").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-      .append("g")
-        .attr("transform", "translate(" + width/2 + "," + height/2 + ")")
-      .selectAll("text")
-        .data(words)
-      .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
-        .style("font-family", function(d) { return d.thefont; })
-        .style("font-weight", function(d) { return Math.floor(Math.random() * fontweights.length); })
-        .style("fill", function(d, i) { return fill(i); })
-        .attr("text-anchor", "middle")
-        .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-        })
-        .text(function(d) { return d.text; });
-  }
-</script>
-</body>
+		<meta charset="utf-8"/>
+		<!-- Based on https://raw.github.com/jasondavies/d3-cloud/master/examples/simple.html -->
+		<title>Cloud using Google Fonts</title>
+	</head>
+	<body>
+		<script src="../lib/d3/d3.v3.js"></script>
+		<script src="../lib/jasondavies-d3-cloud/d3.layout.cloud.js"></script>
+		<script type="text/javascript">
+			var fontnames = [ "Raleway", "Kavoon", "Cinzel Decorative", "Spirax", "Kelly Slab", "Lily Script One", "Caesar Dressing" ];
+			var fontweights = [ 400 ];
+			var googlefonts = [];
+			var fill = d3.scale.category20();
+			var width = 1600;
+			var height = 1000;
+			
+			// Generate Google font references from the base list
+			for (var i = 0; i < fontnames.length; i++) {
+					fontname = fontnames[i].replace(" ", "+");
+					googlefonts[i] = fontname + ":";
+					
+					for (var j = 0; j < fontweights.length; j++) {
+							googlefonts[i] += fontweights[j];
+							
+							if (j < fontweights.length - 1)
+									googlefonts[i] += ",";
+					}
+			}
+			
+			window.onload = function() {
+					// Load up the fonts asynchronously, see https://github.com/typekit/webfontloader
+					WebFontConfig = {
+							google: { families: googlefonts },
+							active: drawCloud,
+					};
+					
+					(function() {
+							var wf = document.createElement('script');
+							wf.src = '../lib/webfontloader/webfont.js';
+							wf.type = 'text/javascript';
+							wf.async = 'true';
+							var s = document.getElementsByTagName('script')[0];
+							s.parentNode.insertBefore(wf, s);
+					})();
+			}
+			
+			function drawCloud() {
+					d3.layout.cloud().size([width / 2, height / 2])
+							.words([
+									"Hello", "world", "normally", "you", "want", "more", "words",
+									"than", "this"].map(function(d) {
+											return {text: d, size: 20 + Math.random() * 90, thefont: fontnames[Math.floor(Math.random() * fontnames.length)]};
+									}))
+							.padding(5)
+							.rotate(function() { return ~~(Math.random() * 2) * 90; })
+							.font(function(d) { return d.thefont; })
+							.fontSize(function(d) { return d.size; })
+							.on("end", draw)
+							.start();
+			}
+			
+			function draw(words) {
+					d3.select("body").append("svg")
+							.attr("width", width)
+							.attr("height", height)
+							.append("g")
+							.attr("transform", "translate(" + width/2 + "," + height/2 + ")")
+							.selectAll("text")
+							.data(words)
+							.enter().append("text")
+							.style("font-size", function(d) { return d.size + "px"; })
+							.style("font-family", function(d) { return d.thefont; })
+							.style("font-weight", function(d) { return Math.floor(Math.random() * fontweights.length); })
+							.style("fill", function(d, i) { return fill(i); })
+							.attr("text-anchor", "middle")
+							.attr("transform", function(d) {
+									return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+							})
+							.text(function(d) { return d.text; });
+			}
+		</script>
+	</body>
 </html>
