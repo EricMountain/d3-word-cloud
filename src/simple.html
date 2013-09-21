@@ -33,7 +33,7 @@
 	  // Load up the fonts asynchronously, see https://github.com/typekit/webfontloader
 	  WebFontConfig = {
       google: { families: googlefonts },
-  		active: function() { drawCloud() },
+  		active: drawCloud,
     };
 
     (function() {
