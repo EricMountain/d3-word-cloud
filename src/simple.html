@@ -13,24 +13,43 @@
     <script src="../lib/d3/d3.v3.js"></script>
     <script src="../lib/jasondavies-d3-cloud/d3.layout.cloud.js"></script>
     <script type="text/javascript">
-      var fontnames = [ "Raleway", "Kavoon", "Cinzel Decorative", "Spirax", "Kelly Slab", "Lily Script One", "Caesar Dressing" ];
-      var fontweights = [ 400 ];
+      var fonts = [ { name: "Raleway", weights: [ 400, 700, 900 ] },
+                    { name: "Kavoon", weights: [ 400 ] },
+                    { name: "Cinzel Decorative", weights: [ 400, 700, 900 ] },
+                    { name: "Spirax", weights: [ 400 ] },
+                    { name: "Kelly Slab", weights: [ 400 ] },
+                    { name: "Lily Script One", weights: [ 400 ] },
+                    { name: "Caesar Dressing", weights: [ 400 ] },
+                    { name: "Peralta", weights: [ 400 ] },
+                    { name: "Erica One", weights: [ 400 ] },
+                    { name: "UnifrakturMaguntia", weights: [ 400 ] },
+                    { name: "Fruktur", weights: [ 400 ] },
+                    { name: "Plaster", weights: [ 400 ] },
+                    { name: "Vast Shadow", weights: [ 400 ] },
+                    { name: "Chango", weights: [ 400 ] },
+                    { name: "Orbitron", weights: [ 400, 700, 900 ] },
+                  ];
       var googlefonts = [];
       var fill = d3.scale.category20();
       var width = 1600;
       var height = 1000;
-      
+
+      // TODO make it configurable (e.g no rotation)
+
       // Generate Google font references from the base list
-      for (var i = 0; i < fontnames.length; i++) {
-          fontname = fontnames[i].replace(" ", "+");
+      for (var i = 0; i < fonts.length; i++) {
+          font = fonts[i];
+          fontname = font.name.replace(" ", "+");
           googlefonts[i] = fontname + ":";
           
-          for (var j = 0; j < fontweights.length; j++) {
-              googlefonts[i] += fontweights[j];
+          for (var j = 0; j < font.weights.length; j++) {
+              googlefonts[i] += font.weights[j];
               
-              if (j < fontweights.length - 1)
+              if (j < font.weights.length - 1)
                   googlefonts[i] += ",";
           }
+
+          console.log(googlefonts[i]);
       }
       
       window.onload = function() {
@@ -51,21 +70,37 @@
       }
       
       function drawCloud() {
+          console.log("drawcloud start");
           d3.layout.cloud().size([width / 2, height / 2])
-              .words([
-                  "Hello", "world", "normally", "you", "want", "more", "words",
-                  "than", "this"].map(function(d) {
-                      return {text: d, size: 20 + Math.random() * 90, thefont: fontnames[Math.floor(Math.random() * fontnames.length)]};
-                  }))
+              .words(
+                  [
+                      "Hello", "world", "normally", "you", "want", "more", "words",
+                      "than", "this", "indeed", "it", "would", "be", "a", "lot", "more",
+                      "fun"
+                  ]
+                      .map(function(d) {
+                          console.log(d);
+                          font = fonts[~~(Math.random() * fonts.length)];
+                          console.log(font);
+                          weight = font.weights[~~(Math.random() * font.weights.length)];
+                          console.log(d + " " + font.name);
+                          return {text: d,
+                                  size: 20 + Math.random() * 90,
+                                  font: font.name,
+                                  weight: weight };
+                      }))
               .padding(5)
-              .rotate(function() { return ~~(Math.random() * 2) * 90; })
-              .font(function(d) { return d.thefont; })
+              .rotate(0)
+              //.rotate(function() { return ~~(Math.random() * 2) * 90; })
+              //.rotate(function() { return ~~(Math.random() * 90) - 90; })
+              .font(function(d) { return d.font; })
               .fontSize(function(d) { return d.size; })
               .on("end", draw)
               .start();
       }
       
       function draw(words) {
+          console.log("draw start");
           d3.select("body").append("svg")
               .attr("width", width)
               .attr("height", height)
@@ -75,8 +110,8 @@
               .data(words)
               .enter().append("text")
               .style("font-size", function(d) { return d.size + "px"; })
-              .style("font-family", function(d) { return d.thefont; })
-              .style("font-weight", function(d) { return Math.floor(Math.random() * fontweights.length); })
+              .style("font-family", function(d) { return d.font; })
+              .style("font-weight", function(d) { return d.weight; })
               .style("fill", function(d, i) { return fill(i); })
               .attr("text-anchor", "middle")
               .attr("transform", function(d) {
