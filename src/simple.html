@@ -29,17 +29,27 @@
                     { name: "Chango", weights: [ 400 ] },
                     { name: "Orbitron", weights: [ 400, 700, 900 ] },
                   ];
-      var googlefonts = [];
       var fill = d3.scale.category20();
       var width = 1600;
       var height = 1000;
+
+      //var 
+
+
+
+
+
+      var googlefonts = [];
+
+
+
 
       // TODO make it configurable (e.g no rotation)
 
       // Generate Google font references from the base list
       for (var i = 0; i < fonts.length; i++) {
-          font = fonts[i];
-          fontname = font.name.replace(" ", "+");
+          var font = fonts[i];
+          var fontname = font.name.replace(" ", "+");
           googlefonts[i] = fontname + ":";
           
           for (var j = 0; j < font.weights.length; j++) {
@@ -48,8 +58,6 @@
               if (j < font.weights.length - 1)
                   googlefonts[i] += ",";
           }
-
-          console.log(googlefonts[i]);
       }
       
       window.onload = function() {
@@ -70,7 +78,6 @@
       }
       
       function drawCloud() {
-          console.log("drawcloud start");
           d3.layout.cloud().size([width / 2, height / 2])
               .words(
                   [
@@ -79,11 +86,8 @@
                       "fun"
                   ]
                       .map(function(d) {
-                          console.log(d);
                           font = fonts[~~(Math.random() * fonts.length)];
-                          console.log(font);
                           weight = font.weights[~~(Math.random() * font.weights.length)];
-                          console.log(d + " " + font.name);
                           return {text: d,
                                   size: 20 + Math.random() * 90,
                                   font: font.name,
@@ -100,7 +104,6 @@
       }
       
       function draw(words) {
-          console.log("draw start");
           d3.select("body").append("svg")
               .attr("width", width)
               .attr("height", height)
