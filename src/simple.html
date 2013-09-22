@@ -37,6 +37,9 @@
       var rotateMethod = rotateHorizontalOrVertical;
       //var rotateMethod = rotateRandomUpright;
 
+      //var fontSizeMethod = fontSizeFixed(60);
+      var fontSizeMethod = fontSizeRandom(50, 40);
+
       var googlefonts = [];
 
       // Generate Google font references from the base list
@@ -79,10 +82,10 @@
                       "fun"
                   ]
                       .map(function(d) {
-                          font = fonts[~~(Math.random() * fonts.length)];
-                          weight = font.weights[~~(Math.random() * font.weights.length)];
+                          var font = fonts[~~(Math.random() * fonts.length)];
+                          var weight = font.weights[~~(Math.random() * font.weights.length)];
                           return {text: d,
-                                  size: 20 + Math.random() * 90,
+                                  size: fontSizeMethod(),
                                   font: font.name,
                                   weight: weight };
                       }))
@@ -125,6 +128,23 @@
 
       function rotateRandomUpright() {
           return ~~(Math.random() * 90) - 90;
+      }
+
+      // Various font size methods
+      function fontSizeFixed(size) {
+          function fontSizeFixedClosure() {
+              return size;
+          }
+
+          return fontSizeFixedClosure;
+      }
+
+      function fontSizeRandom(base, multiplier) {
+          function fontSizeRandomClosure() {
+              return ~~(base + Math.random() * multiplier);
+          }
+
+          return fontSizeRandomClosure;
       }
     </script>
   </body>
