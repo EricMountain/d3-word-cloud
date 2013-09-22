@@ -1,6 +1,3 @@
-d3-word-cloud
-=============
-
 # Word Cloud with Google Fonts
 
 Sample using Jason Davies'
