@@ -33,18 +33,11 @@
       var width = 1600;
       var height = 1000;
 
-      //var 
-
-
-
-
+      //var rotateMethod = rotateZero;
+      var rotateMethod = rotateHorizontalOrVertical;
+      //var rotateMethod = rotateRandomUpright;
 
       var googlefonts = [];
-
-
-
-
-      // TODO make it configurable (e.g no rotation)
 
       // Generate Google font references from the base list
       for (var i = 0; i < fonts.length; i++) {
@@ -94,7 +87,7 @@
                                   weight: weight };
                       }))
               .padding(5)
-              .rotate(0)
+              .rotate(rotateMethod)
               //.rotate(function() { return ~~(Math.random() * 2) * 90; })
               //.rotate(function() { return ~~(Math.random() * 90) - 90; })
               .font(function(d) { return d.font; })
@@ -121,6 +114,19 @@
                   return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
               })
               .text(function(d) { return d.text; });
+      }
+
+      // Various rotate methods
+      function rotateZero() {
+          return 0;
+      }
+
+      function rotateHorizontalOrVertical() {
+          return ~~(Math.random() * 2) * 90;
+      }
+
+      function rotateRandomUpright() {
+          return ~~(Math.random() * 90) - 90;
       }
     </script>
   </body>
